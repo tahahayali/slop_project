@@ -19,15 +19,6 @@ import { Link } from "react-router-dom";
 const pages = ['Login', 'Signup', 'Home'];
 
 function Navbar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleClick = (page) => {
-    
-  };
 
   return (
     <AppBar position="absolute">
@@ -36,11 +27,12 @@ function Navbar() {
           {/* We want our logo here */}
           <Typography
             component={Link}
-            to="/"
+            to="/home"
             variant="h6"
             noWrap
             sx={{
               mr: 2,
+              flexGrow: 1, // Pushes this item to the left
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'Gill Sans',
               fontWeight: 200,
