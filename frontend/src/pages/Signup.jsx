@@ -11,7 +11,6 @@ export default function Signup() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
 
@@ -28,6 +27,12 @@ export default function Signup() {
             const promise = await axios.post(`${BASE_URL}/auth/signup`, {
                 user: username,
                 pass: password
+            })
+            .then((response) => {if (response.status === 200) {
+                    alert("Account created successfully!");
+                    // redirect to account
+                    
+                }
             });
 
         }
