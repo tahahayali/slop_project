@@ -9,7 +9,7 @@ export default function Signup() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const BASE_URL = import.meta.env.VITE_BASE_URL;
+    const BASE_URL = "http://127.0.0.1:5000"; // import.meta.env.VITE_BASE_URL;
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
@@ -44,9 +44,6 @@ export default function Signup() {
                 alert("An error has occurred. Try again later")
             }
         }
-
-
-
     }
 
     const passwordPasses = confirmPassword != '' && password === confirmPassword;
