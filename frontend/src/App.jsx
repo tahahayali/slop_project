@@ -4,14 +4,14 @@ import Navbar from './components/navbar.jsx';
 import MyRoutes from './MyRoutes.jsx'
 
 function App() {
-  const [currUser, setCurrUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
 
   return (
     <div>
-        <Navbar user={currUser} onLogout={() => setCurrUser(null)}/>
+        <Navbar user={currentUser} onLogout={() => setCurrentUser(null)}/>
         <main className='main-content'>
-          <MyRoutes currUser={currUser} setCurrUser={setCurrUser}/>
+          <MyRoutes currUser={currentUser} setCurrUser={setCurrentUser}/>
         </main>
     </div>
   )

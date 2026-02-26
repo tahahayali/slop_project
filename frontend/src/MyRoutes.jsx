@@ -10,7 +10,7 @@ function MyRoutes({currUser, setCurrUser}) {
     return (
         <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/login' element={!currUser ? <Login onSuccess={setCurrUser()} /> : <Navigate to="/account"/>}/>
+            <Route path='/login' element={!currUser ? <Login onSuccess={setCurrUser} /> : <Navigate to="/account"/>}/>
             <Route path='/signup' element={!currUser ? <Signup /> : <Navigate to="/account"/>} />
             <Route path='/account' element={currUser ? <Account user={currUser}/> : <Navigate to="/login"/>}/>
             <Route path="*" element={<Home />} />

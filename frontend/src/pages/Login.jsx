@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login(onSuccess) {
+export default function Login({ onSuccess }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function Login(onSuccess) {
         )
             .then((response) => {if (response.status === 200) {
                     alert("Logged in!");
-                    onSuccess();
+                    onSuccess(response.data.user);
                     navigate('/account');
                 }
             });

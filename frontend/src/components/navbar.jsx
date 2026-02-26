@@ -58,7 +58,7 @@ const handleLogout = (page) => {
                   variant='outlined'
                   key={page}
                   sx={{ my: 2, color: 'white', display: 'block' }}
-                  onClick={handleLogout(page)}
+                  onClick={() => handleLogout(page)}
                   >
                   {page}
                   </Button>
