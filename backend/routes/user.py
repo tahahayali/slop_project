@@ -23,9 +23,9 @@ def login(username: str, password: str):
     cursor.execute(f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'")
     user = cursor.fetchone()
     if user:
-        res =  {"message": "Login successful"}, 200
+        res =  {"message": "Login successful", "user" : user["username"]}, 200
     else:
-        res =  {"error": "Invalid credentials"}, 401
+        res =  {"error": "Invalid username or password"}, 401
         
     mydb.close()
     return res

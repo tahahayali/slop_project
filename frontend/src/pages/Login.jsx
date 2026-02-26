@@ -3,11 +3,12 @@ import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-
-export default function Login() {
+export default function Login(onSuccess) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
     const BASE_URL = import.meta.env.VITE_BASE_URL;
 
     const handleUsernameChange = (event) => {
@@ -17,31 +18,23 @@ export default function Login() {
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
     }
-    const handleConfirmPasswordChange = (event) => {
-        setConfirmPassword(event.target.value);
-    }
 
     const handleLogin = async () => {
         try {
-            const promise = await axios.post(`${BASE_URL}/auth/login`, {
-                user: username,
-                pass: password
-            })
+            const promise = await axios.post(`${BASE_URL}/auth/login`, 
+                {user: username, pass: password},
+                {withCredentials: true}
+        )
             .then((response) => {if (response.status === 200) {
                     alert("Logged in!");
-                    // redirect to account
-                    
+                    onSuccess();
+                    navigate('/account');
                 }
             });
 
         }
         catch (error) {
-            if (error.response?.status === 409) { // 409 error code means conflict
-                alert("Something else.")
-            }
-            else {
-                alert("An error has occurred. Try again later")
-            }
+            alert("Error: " + error);
         }
     }
     const canSubmit = username != '' && password != '';
@@ -78,8 +71,6 @@ export default function Login() {
                         Log in
                     </Button>
                 </Box>
-
-
             </Box>
             
         </div>

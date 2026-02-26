@@ -1,24 +1,26 @@
 // Taken from https://mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu
 
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-// import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-// import Menu from '@mui/material/Menu';
-// import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-// import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-// import Tooltip from '@mui/material/Tooltip';
-// import MenuItem from '@mui/material/MenuItem';
-// import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from "react-router-dom";
 
-const pages = ['Login', 'Signup', 'Home'];
+const loggedOutPages = ['Login', 'Signup', 'Home'];
+const loggedInPages = ['Account', 'Home', 'Logout'];
 
-function Navbar() {
+function Navbar({user, onLogout}) {
+
+const handleLogout = (page) => {
+  if (page === 'Logout') {
+    console.log("User: " + user + "is logging out");
+    onLogout();
+    console.log("User logged out, confirming user is null: " + user);
+  }
+}
 
   return (
     <AppBar position="absolute">
@@ -47,16 +49,30 @@ function Navbar() {
 
           {/* This is for each page*/}
           <Box sx={{display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-start', ml:2}}>
-            {pages.map((page) => (
-              <Button
-                component= {Link}
-                to={'/' + page.toLowerCase()}
-                variant='outlined'
-                key={page}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
+            {user ? 
+
+              loggedInPages.map((page) => (
+                <Button
+                  component= {Link}
+                  to={'/' + page.toLowerCase()}
+                  variant='outlined'
+                  key={page}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  onClick={handleLogout(page)}
+                  >
+                  {page}
+                  </Button>
+              )) : 
+              loggedOutPages.map((page) => (
+                <Button
+                  component= {Link}
+                  to={'/' + page.toLowerCase()}
+                  variant='outlined'
+                  key={page}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page}
+                </Button>
             ))}
           </Box>
         </Toolbar>
