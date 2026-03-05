@@ -1,26 +1,28 @@
 // Taken from https://mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu
 
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const loggedOutPages = ['Login', 'Signup', 'Home'];
 const loggedInPages = ['Account', 'Home', 'Logout'];
 
 function Navbar({user, onLogout}) {
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("User status: " + (user ? "Logged in as " + user : "Not logged in"));
   }, [user]);
 
-  const handleLogout = (page) => {
+  const handleLogout = async (page) => {
     if (page === 'Logout') {
-      onLogout();
+      await onLogout();
+      navigate('/home');
     }
   }
 

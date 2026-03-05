@@ -2,6 +2,8 @@ import React, { useState, useEffect, use } from 'react';
 import './App.css'
 import Navbar from './components/navbar.jsx';
 import MyRoutes from './MyRoutes.jsx'
+import axios from 'axios';
+import { logout } from './utils/authstuff.js';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -24,9 +26,19 @@ function App() {
     fetchCurrentUser();
   }, []);
 
+  const handleLogout = async () => {
+    const loggedOut = await logout();
+    if (loggedOut) {
+      setCurrentUser(null);
+    }
+    else {
+      alert("Logout failed, problem with server");
+    }
+  };
+
   return (
     <div>
-        <Navbar user={currentUser} onLogout={() => setCurrentUser(null)}/>
+        <Navbar user={currentUser} onLogout={handleLogout}/>
         <main className='main-content'>
           <MyRoutes currUser={currentUser} setCurrUser={setCurrentUser}/>
         </main>

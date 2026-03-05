@@ -30,6 +30,3 @@ def login(username: str, password: str):
         
     mydb.close()
     return res
-
-def logout():
-    pass

@@ -2,8 +2,8 @@ import React from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Home from './pages/Home.jsx'
-import Login from './pages/Login.jsx'
-import Signup from './pages/Signup.jsx'
+import Login from './pages/auth/Login.jsx'
+import Signup from './pages/auth/Signup.jsx'
 import Account from './pages/Account.jsx'
 
 function MyRoutes({currUser, setCurrUser}) {

@@ -8,7 +8,7 @@ app = Flask(__name__)
 # TODO: Make this secure
 app.secret_key = "sec_key" # Will change
 # app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_COOKIE_HTTPS_ONLY'] = False
+app.config['SESSION_COOKIE_HTTPONLY'] = False
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = True
 # Session(app)
@@ -48,6 +48,11 @@ def me():
         data = {"error": "Not logged in"}
         status = 401
     return jsonify(data), status
+
+@app.route('/auth/logout', methods=['POST'])
+def logout():
+    session.pop("user", None)
+    return jsonify({"message": "Logged out"}), 200
     
     
 
