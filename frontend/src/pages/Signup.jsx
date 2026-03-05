@@ -3,12 +3,13 @@ import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-
-export default function Signup() {
+export default function Signup({ onSuccess }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
     const BASE_URL = import.meta.env.VITE_BASE_URL;
 
     const handleUsernameChange = (event) => {
@@ -22,20 +23,38 @@ export default function Signup() {
         setConfirmPassword(event.target.value);
     }
 
-    const handleSignup = async () => {
+    const loginFromSignup = async (username, password) => {
         try {
-            const promise = await axios.post(`${BASE_URL}/auth/signup`, {
-                user: username,
-                pass: password
-            })
-            .then((response) => {if (response.status === 200) {
-                    alert("Account created successfully!");
-                    // redirect to account
-                    
-                }
-            });
+            const response = await axios.post(`${BASE_URL}/auth/login`, 
+                {user: username, pass: password},
+                {withCredentials: true}
+            );
+            if (response.status === 200) {
+                console.log("Login successful");
+
+                onSuccess(response.data.user);
+                navigate('/account');
+            }
 
         }
+        catch (error) {
+            alert("Error: " + error);
+        }
+    }
+
+    const handleSignup = async () => {
+        try {
+            const response = await axios.post(`${BASE_URL}/auth/signup`, {
+                user: username,
+                pass: password
+            });
+
+            if (response.status === 201) {
+                    console.log("Account created, logging in...");
+                    loginFromSignup(username, password);                 
+                }
+            }
+
         catch (error) {
             if (error.response?.status === 409) { // 409 error code means conflict
                 alert("Someone has that username.")
@@ -46,7 +65,7 @@ export default function Signup() {
         }
     }
 
-    const passwordPasses = confirmPassword != '' && password === confirmPassword;
+    const passwordPasses = password === confirmPassword;
     const canSubmit = username != '' && passwordPasses;
 
     return (

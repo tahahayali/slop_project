@@ -1,6 +1,6 @@
 // Taken from https://mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,13 +14,15 @@ const loggedInPages = ['Account', 'Home', 'Logout'];
 
 function Navbar({user, onLogout}) {
 
-const handleLogout = (page) => {
-  if (page === 'Logout') {
-    console.log("User: " + user + "is logging out");
-    onLogout();
-    console.log("User logged out, confirming user is null: " + user);
+  useEffect(() => {
+    console.log("User status: " + (user ? "Logged in as " + user : "Not logged in"));
+  }, [user]);
+
+  const handleLogout = (page) => {
+    if (page === 'Logout') {
+      onLogout();
+    }
   }
-}
 
   return (
     <AppBar position="absolute">

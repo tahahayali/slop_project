@@ -21,18 +21,16 @@ export default function Login({ onSuccess }) {
 
     const handleLogin = async () => {
         try {
-            const promise = await axios.post(`${BASE_URL}/auth/login`, 
+            const response = await axios.post(`${BASE_URL}/auth/login`, 
                 {user: username, pass: password},
                 {withCredentials: true}
-        )
-            .then((response) => {if (response.status === 200) {
-                    alert("Logged in!");
+            );
+            if (response.status === 200) {
+                    console.log("Login successful");
                     onSuccess(response.data.user);
                     navigate('/account');
                 }
-            });
-
-        }
+            }
         catch (error) {
             alert("Error: " + error);
         }
