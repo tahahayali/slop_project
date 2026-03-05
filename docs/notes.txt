@@ -1,0 +1,31 @@
+Notes for Thursday March 5th
+I finally got the whole authentication process to work. This took a long while, and had many steps. 
+Step 1. Setting up the database. 
+    This took a while, I didn't like the way Postgres was, so I switched to MySQL and found that easier to use.
+    I made the table and now I was able to add users into the table.
+Step 2. Setting up signing in
+    This took a while. I learned about routes and how browsers send data 
+    to the back end. I had to make the endpoint in the backend as well. There is a glaring sqli injection the way I made the 
+    query for the backend that I have to fix. Basically what we do is, 
+    1. Click the sign in button in the navbar
+    2. This sends us to the /signup route that we set up in MyRoutes.jsx
+    3. Here, we run the Signup component that we made. We included a onSuccess prop.
+    4. We send a request with axios to the backend. There it checks if the user already 
+    exists. If it doesn't we add it into the database.
+    5. Once it is added, we run the login route just so that we automatically log the user in.
+Step 3. Setting up log in
+Basically the same as sign in, only difference is that we just check to see if the username and password
+matches.
+Step 4. Setting up sessions.
+This was the biggest issue. I switched from flask sessions, to my own cookies, and back to flask sessions.
+Basically, when the user logs in, we add a flask cookie to the session.
+This was working fine, but it wasn't working when I refreshed the page. 
+This was because react would forget who the user is after we refreshed. Thats why
+we made another route that checks to see if the session cookie exists. If it does, we return it,
+thus solving the problem
+5. Logging out. 
+Logging out was fairly simple, on the front end we set the user to be null when log out is clicked,
+and on the backend we basically just remove the session cookie. This ties it all together
+
+
+
