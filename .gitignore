@@ -211,4 +211,3 @@ flask_session/
 
 # .env files
 .env
-.DS_Store

@@ -1,15 +1,17 @@
 from flask import Flask, request, jsonify, session
 from flask_cors import CORS
 from routes.user import reg, login
-from flask_session import Session 
+# from flask_session import Session 
 
 app = Flask(__name__)
 
 # TODO: Make this secure
 app.secret_key = "sec_key" # Will change
-app.config['SESSION_TYPE'] = 'filesystem'
+# app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_COOKIE_HTTPS_ONLY'] = False
-Session(app)
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
+# Session(app)
 
 CORS(app, origins=["http://localhost:5173","http://127.0.0.1:5173"], supports_credentials=True)
 
@@ -34,7 +36,19 @@ def login_route():
     if status == 200:
         session["user"] = data["user"]
         
+        
     return jsonify(data), status
+
+@app.route('/auth/me', methods=['GET'])
+def me():
+    if "user" in session:
+        data = {"user": session["user"]}
+        status = 200
+    else:
+        data = {"error": "Not logged in"}
+        status = 401
+    return jsonify(data), status
+    
     
 
 if __name__ == '__main__':

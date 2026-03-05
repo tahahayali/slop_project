@@ -24,6 +24,7 @@ def login(username: str, password: str):
     user = cursor.fetchone()
     if user:
         res =  {"message": "Login successful", "user" : user["username"]}, 200
+        
     else:
         res =  {"error": "Invalid username or password"}, 401
         
@@ -32,7 +33,3 @@ def login(username: str, password: str):
 
 def logout():
     pass
-
-    
-    
-    
