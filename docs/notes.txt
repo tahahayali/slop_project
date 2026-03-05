@@ -26,6 +26,3 @@ thus solving the problem
 5. Logging out. 
 Logging out was fairly simple, on the front end we set the user to be null when log out is clicked,
 and on the backend we basically just remove the session cookie. This ties it all together
-
-
-
